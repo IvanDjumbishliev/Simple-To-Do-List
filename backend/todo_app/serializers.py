@@ -7,7 +7,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = ['id', 'title', 'description', 'created_at', 'due_date', 'completed', 'user']
-        read_only_fields = ['created_at']
+        read_only_fields = ['created_at', 'user', 'id' ]
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,5 +17,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        Token.objects.create(user=user)
         return user

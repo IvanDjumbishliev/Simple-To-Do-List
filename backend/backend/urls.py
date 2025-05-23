@@ -9,4 +9,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='refresh_token'),
     path('api/users/', CreateUserView.as_view(), name='register'),
     path('api-auth/', include('rest_framework.urls')), 
-]
+    path('api/', include('todo_app.urls')),  
+] 

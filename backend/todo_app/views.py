@@ -16,6 +16,7 @@ class TaskListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         if serializer.is_valid():
             serializer.save(author=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -29,6 +30,7 @@ class TaskDelete(generics.DestroyAPIView):
     def perform_destroy(self, instance):
         if instance.author == self.request.user:
             instance.delete()
+            return Response({"detail": "Task deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
         else:
             return Response({"detail": "You do not have permission to delete this task."}, status=status.HTTP_403_FORBIDDEN)
 
@@ -43,6 +45,10 @@ class TaskUpdate(generics.UpdateAPIView):
         instance = self.get_object()
         if instance.author == self.request.user:
             serializer.save()
+            return Response(
+                {"detail": "Task updated successfully."}, 
+                status=status.HTTP_200_OK
+            )
         else:
             return Response(
                 {"detail": "You do not have permission to edit this task."}, 
@@ -62,6 +68,10 @@ class TaskCompeted(generics.UpdateAPIView):
             instance.completed = not instance.completed
             instance.save()
             serializer.save(instance)
+            return Response(
+                {"detail": "Task marked as completed."}, 
+                status=status.HTTP_200_OK
+            )
         else:
             return Response(
                 {"detail": "You do not have permission to mark this task as completed."}, 

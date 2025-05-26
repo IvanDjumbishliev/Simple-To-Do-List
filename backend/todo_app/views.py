@@ -49,6 +49,25 @@ class TaskUpdate(generics.UpdateAPIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
+class TaskCompeted(generics.UpdateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(author=self.request.user)
+
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        if instance.author == self.request.user:
+            instance.completed = not instance.completed
+            instance.save()
+            serializer.save(instance)
+        else:
+            return Response(
+                {"detail": "You do not have permission to mark this task as completed."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

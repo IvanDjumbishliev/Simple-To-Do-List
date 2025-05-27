@@ -7,12 +7,20 @@ import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 
 function Logout() {
-  localStorage.clear()
+  try {
+    localStorage.clear()
+  } catch (error) {
+    console.error('Error during logout:', error)
+  }
   return <Navigate to="/login" />
 }
 
 function RegisterAndLogout() {
-  localStorage.clear()
+  try {
+    localStorage.clear()
+  } catch (error) {
+    console.error('Error during registration logout:', error)
+  }
   return <Register />
 }
 
@@ -21,7 +29,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<RegisterAndLogout />} />
         <Route path="/logout" element={<Logout />} />
         <Route
           path="/"

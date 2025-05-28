@@ -3,38 +3,46 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin: 15px 0;
+    margin: 16px 0;
     transition: transform 0.2s ease;
 }
 
 .task:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .task h3 {
     color: #333;
-    margin: 0 0 10px 0;
-    font-size: 1.2rem;
+    margin: 0 0 12px 0;
+    font-size: 1.25rem;
 }
 
 .task p {
     color: #666;
     margin: 8px 0;
-    font-size: 0.95rem;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 .task button {
-    background-color: #ff4d4d;
+    background-color: #4a90e2;
     color: white;
     border: none;
-    padding: 8px 16px;
     border-radius: 4px;
+    padding: 8px 16px;
+    margin: 8px 8px 0 0;
     cursor: pointer;
-    margin-top: 10px;
     transition: background-color 0.2s ease;
 }
 
 .task button:hover {
-    background-color: #ff3333;
+    background-color: #357abd;
+}
+
+.task button:last-child {
+    background-color: #6c757d;
+}
+
+.task button:last-child:hover {
+    background-color: #5a6268;
 }

@@ -37,7 +37,8 @@ function Form({ route, method }) {
 
     const name = method === "login" ? "Login" : "Register";
 
-    return <form onSubmit={handleSubmit} className="form">
+    return <div>
+        <form onSubmit={handleSubmit} className="form">
         <h1>{name}</h1>
         <input
             type="text"
@@ -57,6 +58,19 @@ function Form({ route, method }) {
             {name}
         </button>
     </form>
+        <div className="form-footer">
+            {method === "login" ? (
+                <p>
+                    Don't have an account? <a href="/register">Register</a>
+                </p>
+            ) : (
+                <p>
+                    Already have an account? <a href="/login">Login</a>
+                </p>
+            )}
+        </div>
+    </div>
+    
 }
 
 export default Form;

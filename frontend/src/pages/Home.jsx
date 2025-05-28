@@ -7,29 +7,9 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    getTasks();
-  }, []);
-
-  const getTasks = () => {
-    api
-      .get('/api/tasks/')
-      .then((response) => response.data)
-      .then((data) => { setTasks(data); console.log(data) })
-      .catch((err) => alert(err));
-  }
-
-  const deleteTask = (id) => {
-    api
-      .delete(`/api/tasks/delete/${id}/`)
-      .then((res) => {
-        if (res.status === 204) alert("Task deleted successfully");
-        else alert("Failed to delete task");
-        getTasks();
-      })
-      .catch((err) => alert(err));
-  };
+  const [editingTask, setEditingTask] = useState(null);
+  const [editedTitle, setEditedTitle] = useState("");
+  const [editedDescription, setEditedDescription] = useState("");
 
   const createTask = (e) => {
     e.preventDefault();
@@ -41,19 +21,14 @@ function Home() {
       .then((res) => {
         if (res.status === 201) alert("Task created successfully");
         else alert("Failed to create task");
-        getTasks();
       })
       .catch((err) => alert(err));
   }
 
+
   return (
     <div className="home-container">
-      <div className="tasks-section">
-        <h2>Tasks</h2>
-        {tasks.map((task) => (
-          <Task key={task.id} task={task} onDelete={deleteTask} />
-        ))}
-      </div>
+
       <div className="create-task-form">
         <h2>Create a task</h2>
         <form onSubmit={createTask}>

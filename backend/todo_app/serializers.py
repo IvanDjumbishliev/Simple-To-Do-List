@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = ['id', 'title', 'description', 'created_at', 'due_date', 'completed', 'author']
+        fields = ['id', 'title', 'description', 'created_at', 'completed', 'author']
         extra_kwargs = {'author': {'read_only': True}}
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

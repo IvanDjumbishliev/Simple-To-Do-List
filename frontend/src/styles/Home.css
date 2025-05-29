@@ -1,7 +1,22 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
 .home-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    min-height: calc(100vh - 200px); /* Adjust based on your header/footer height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .tasks-section {
@@ -31,6 +46,7 @@
 
 .form-group {
     margin-bottom: 15px;
+    width: 100%;
 }
 
 label {
@@ -46,14 +62,15 @@ textarea {
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 15px;
     font-size: 1rem;
     transition: border-color 0.2s ease;
+    box-sizing: border-box; /* Add this to include padding in width calculation */
 }
 
 textarea {
     min-height: 100px;
     resize: vertical;
+    margin: 0; /* Remove any default margins */
 }
 
 input[type="submit"] {

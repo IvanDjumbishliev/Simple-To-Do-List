@@ -62,43 +62,65 @@ function Tasks() {
                .catch((err) => alert(err));
      };
 
-     return <div>
-          <div className="tasks-section">
-               <h2>Tasks</h2>
-               {tasks.length === 0 ? (
-                    <div className="no-tasks-message">
-                         <p>No tasks available.<Link to="/">Create a new task</Link></p>
-                         
-                    </div>
-               ) : (
-                    tasks.map((task) => (
-                         <div key={task.id}>
-                              {editingTask?.id === task.id ? (
-                                   <div className="edit-form">
-                                        <input
-                                             type="text"
-                                             value={editedTitle}
-                                             onChange={(e) => setEditedTitle(e.target.value)}
-                                        />
-                                        <textarea
-                                             value={editedDescription}
-                                             onChange={(e) => setEditedDescription(e.target.value)}
-                                        />
-                                        <button onClick={() => handleEditSubmit(task.id)}>Save</button>
-                                        <button onClick={cancelEditing}>Cancel</button>
-                                   </div>
-                              ) : (
-                                   <Task
-                                        task={task}
-                                        onDelete={deleteTask}
-                                        onEdit={() => startEditing(task)}
-                                   />
-                              )}
-                         </div>
-                    ))
-               )}
-          </div>
-     </div>
+     const toggleComplete = (id) => {
+          const task = tasks.find(t => t.id === id);
+          api
+               .put(`/api/tasks/${id}/update/`, {
+                    ...task,
+                    completed: !task.completed
+               })
+               .then((res) => {
+                    if (res.status === 200) {
+                         getTasks();
+                    } else {
+                         alert("Failed to update task completion");
+                    }
+               })
+               .catch((err) => alert(err));
+     };
 
+     return (
+          <div>
+               <div className="tasks-section">
+                    <h2>Tasks</h2>
+                    {tasks.length === 0 ? (
+                         <div className="no-tasks-message">
+                              <p>No tasks available.<Link to="/">Create a new task</Link></p>
+
+                         </div>
+                    ) : (
+                         [...tasks]
+                              .sort((a, b) => a.completed === b.completed ? 0 : a.completed ? 1 : -1)
+                              .map((task) => (
+                                   <div key={task.id}>
+                                        {editingTask?.id === task.id ? (
+                                             <div className="edit-form">
+                                                  <input
+                                                       type="text"
+                                                       value={editedTitle}
+                                                       onChange={(e) => setEditedTitle(e.target.value)}
+                                                  />
+                                                  <textarea
+                                                       value={editedDescription}
+                                                       onChange={(e) => setEditedDescription(e.target.value)}
+                                                  />
+                                                  <button onClick={() => handleEditSubmit(task.id)}>Save</button>
+                                                  <button onClick={cancelEditing}>Cancel</button>
+                                             </div>
+                                        ) : (
+                                             <Task
+                                                  task={task}
+                                                  onDelete={deleteTask}
+                                                  onEdit={() => startEditing(task)}
+                                                  onComplete={toggleComplete}
+                                             />
+                                        )}
+                                   </div>
+                              ))
+                    )}
+               </div>
+          </div>
+
+     )
 }
 export default Tasks;

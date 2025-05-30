@@ -15,6 +15,7 @@ export default function Layout() {
             <li>
               <Link to="/tasks">Tasks</Link>
             </li>
+            
           </ul>
           <div>
             <Link className="btn-nav btn-primary" to="/register">

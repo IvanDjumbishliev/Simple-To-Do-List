@@ -55,7 +55,7 @@ class TaskUpdate(generics.UpdateAPIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-class TaskCompeted(generics.UpdateAPIView):
+class TaskCompleted(generics.UpdateAPIView):
     serializer_class = TaskSerializer
     permission_classes = [IsAuthenticated]
 
